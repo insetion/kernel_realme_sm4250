@@ -5,4 +5,4 @@ config OPLUS_FEATURE_SAUPWK
     tristate "oppo saupwk project"
     default n
     help
-      define this config to init oppo saupwk.
+    define this config to init oppo saupwk.
