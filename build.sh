@@ -17,8 +17,8 @@ export PATH="$TC_DIR/bin:$PATH"
 export PATH="$TC_DIR/:$PATH" 
 export PATH="$GAS/bin:$PATH" 
 export PATH="$GAS/:$PATH"
-DEFCONFIG="stock_defconfig"
-KERNELNAME="StarX"
+DEFCONFIG="vendor/RMX2195_defconfig"
+KERNELNAME="Star-Ext"
 clear
 echo -e " "
 echo -e "${txtbld}Config:${txtrst} $DEFCONFIG"
@@ -67,7 +67,7 @@ fi
 compile() {
 
 # rm -rf out && mkdir -p out
-sed -i 's/^CONFIG_LOCALVERSION=".*"/CONFIG_LOCALVERSION="StarX"/' arch/arm64/configs/$DEFCONFIG   #Change Kernel Name Here
+
 echo -e "$blue    \nMake DefConfig\n $nocol"
 mkdir -p out
 make O=out ARCH=arm64 $DEFCONFIG
@@ -76,35 +76,35 @@ grep CONFIG_LOCALVERSION out/.config
 sleep 2
 # Build start
 echo -e "$blue    \nStarting kernel compilation...\n $nocol"
-make -j$(nproc --all) O=out ARCH=arm64 CC="ccache clang" CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- CLANG_TRIPLE=aarch64-linux-gnu-
+make -j$(nproc --all) O=out ARCH=arm64 CC="ccache clang" CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- CLANG_TRIPLE=aarch64-linux-gnu- LLVM=1
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz
 if ! [ -a "$IMAGE" ]; then
         echo -e "Error"
         exit 1
-else
-git clone --depth=1 -b RMX2195 https://github.com/insetion/Anykernel3.git AnyKernel 
-cp out/arch/arm64/boot/Image.gz AnyKernel
-cp out/arch/arm64/boot/dtbo.img AnyKernel
-cp out/arch/arm64/boot/dtb.img AnyKernel
-echo -e "Copying to Anykernel"
-sleep 10
+fi
+#git clone --depth=1 -b RMX2195 https://github.com/insetion/Anykernel3.git AnyKernel 
+#cp out/arch/arm64/boot/Image.gz AnyKernel
+#cp out/arch/arm64/boot/dtbo.img AnyKernel
+#cp out/arch/arm64/boot/dtb.img AnyKernel
+#sleep 10
 
-fi
 }
-if [[ $1 == "-start" || $1 == "build" ]]; then
+if [[ $1 == "-gas" || $1 == "build" ]]; then
 compile
-echo -e "Compressing to Anykernel.zip"
-cd AnyKernel
-zip -r9 RMX2195-AnyKernel3.zip * -x .git README.md *placeholder
-echo -e "$blue    \nKernel Builded check Anykernel Folder...\n $nocol"
+#echo -e "Compressing to Anykernel.zip"
+#cd AnyKernel
+#zip -r9 RMX2195-AnyKernel3.zip * -x .git README.md *placeholder
+echo -e "$blue    \nKernel Builded check out Folder...\n $nocol"
+exit
 fi
+
 case "$1" in
   help)
     echo "Cara Pemakaian:"
     echo ""
     echo " Untuk Update repository gunakan -up/ update"
     echo " Untuk Update Clang gunakan -cl/ clang"
-    echo " Untuk Mulai Compile gunakan -start/ build"
+    echo " Untuk Mulai Compile gunakan -gas/ build"
     echo " Untuk Hapus cache build gunakan -mr/ Clean"
     echo " credit @mnrdnn/@udyneos"
     ;;
