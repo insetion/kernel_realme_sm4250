@@ -7,7 +7,7 @@ bengal-idp-overlay.dtbo-base := bengal.dtb
 
 else
 dtb-$(CONFIG_ARCH_BENGAL) += \
-		bengal-idp.dtb \
+		bengal-idp.dtb 
 endif
 
 else # CONFIG_ARCH_BENGAL

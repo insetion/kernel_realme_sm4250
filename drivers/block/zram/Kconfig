@@ -56,7 +56,7 @@ config ZRAM_MEMORY_TRACKING
 
 #ifdef OPLUS_FEATURE_ZRAM_OPT
 config OPLUS_ZRAM_OPT
-	bool " zram  optimization"
+	bool "zram  optimization"
 	depends on ZRAM
 	default y
 	help
