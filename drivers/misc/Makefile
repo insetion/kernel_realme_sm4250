@@ -88,3 +88,4 @@ obj-$(CONFIG_FPR_FPC)		+= fpr_FingerprintCard/
 #ifdef VENDOR_EDIT
 obj-$(CONFIG_OPLUS_RF_CABLE_MONITOR)	+= oplus_rf_cable_monitor.o
 #endif
+obj-y                           += qrc/
